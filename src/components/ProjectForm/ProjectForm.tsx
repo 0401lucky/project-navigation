@@ -24,6 +24,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
     tags: initialData?.tags || [],
     category: initialData?.category || 'web-app',
     thumbnail: initialData?.thumbnail || '',
+    icon: initialData?.icon || '',
     status: initialData?.status || 'active',
     isFeatured: initialData?.isFeatured || false,
   });
@@ -246,18 +247,42 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         )}
       </div>
 
-      {/* 缩略图 */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          缩略图 URL (可选)
-        </label>
-        <input
-          type="url"
-          value={formData.thumbnail}
-          onChange={(e) => setFormData({ ...formData, thumbnail: e.target.value })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-          placeholder="https://example.com/image.png"
-        />
+      {/* 缩略图和图标 */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            缩略图 URL (可选)
+          </label>
+          <input
+            type="url"
+            value={formData.thumbnail}
+            onChange={(e) => setFormData({ ...formData, thumbnail: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+            placeholder="https://example.com/image.png"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            项目图标 (可选)
+          </label>
+          <input
+            type="text"
+            value={formData.icon}
+            onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+            placeholder="🚀 Emoji或图片URL"
+          />
+          {formData.icon && (
+            <div className="mt-2 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+              <span>预览:</span>
+              {formData.icon.startsWith('http') ? (
+                <img src={formData.icon} alt="icon" className="w-6 h-6 object-cover rounded" />
+              ) : (
+                <span className="text-2xl">{formData.icon}</span>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* 精选项目 */}

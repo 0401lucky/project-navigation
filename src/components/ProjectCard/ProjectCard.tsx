@@ -33,10 +33,21 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {/* 卡片头部 */}
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold text-gray-900 flex-1 line-clamp-2 pr-2">
-            {project.name}
-          </h3>
-          <span className="px-2 py-1 bg-gray-100 rounded-lg text-gray-600 text-xs whitespace-nowrap">
+          <div className="flex items-center gap-2 flex-1 pr-2">
+            {project.icon && (
+              <div className="flex-shrink-0">
+                {project.icon.startsWith('http') ? (
+                  <img src={project.icon} alt={project.name} className="w-8 h-8 object-cover rounded" />
+                ) : (
+                  <span className="text-2xl">{project.icon}</span>
+                )}
+              </div>
+            )}
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2">
+              {project.name}
+            </h3>
+          </div>
+          <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-600 dark:text-gray-400 text-xs whitespace-nowrap flex-shrink-0">
             {CATEGORY_LABELS[project.category]}
           </span>
         </div>
@@ -47,14 +58,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             project.status === 'active' ? 'bg-green-100 text-green-700' :
             project.status === 'in-progress' ? 'bg-blue-100 text-blue-700' :
             project.status === 'planned' ? 'bg-purple-100 text-purple-700' :
-            'bg-gray-100 text-gray-600'
+            'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
           }`}>
             {STATUS_LABELS[project.status]}
           </span>
         </div>
 
         {/* 项目描述 */}
-        <p className="text-gray-600 text-sm mb-4 flex-1 line-clamp-3">
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-1 line-clamp-3">
           {project.description}
         </p>
 
@@ -65,7 +76,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               <TagBadge key={tag} tag={tag} />
             ))}
             {project.tags.length > 3 && (
-              <span className="text-gray-500 text-xs self-center">
+              <span className="text-gray-500 dark:text-gray-400 text-xs self-center">
                 +{project.tags.length - 3}
               </span>
             )}
@@ -73,7 +84,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         )}
 
         {/* 底部按钮 */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-2">
             <a
               href={project.url}
@@ -89,11 +100,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                className="w-9 h-9 flex items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
                 title="查看 GitHub"
                 onClick={(e) => e.stopPropagation()}
               >
-                <svg className="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                   <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                 </svg>
               </a>

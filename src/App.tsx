@@ -5,14 +5,18 @@ import { Container } from './components/Layout/Container';
 import { Footer } from './components/Layout/Footer';
 import { SearchBar } from './components/Search/SearchBar';
 import { FilterPanel } from './components/Filter/FilterPanel';
+import { SortPanel } from './components/Sort/SortPanel';
+import { StatsPanel } from './components/Stats/StatsPanel';
 import { ProjectGrid } from './components/ProjectGrid/ProjectGrid';
 import { AddProjectModal } from './components/ProjectForm/AddProjectModal';
 import { EditProjectModal } from './components/ProjectForm/EditProjectModal';
 import { ToastContainer } from './components/Toast/ToastContainer';
 import { useFilter } from './hooks/useFilter';
+import { useSort } from './hooks/useSort';
 import { useToast } from './hooks/useToast';
 import { storage } from './utils/storage';
 import type { Project, ProjectCategory, ProjectStatus } from './types/project';
+import type { SortOption } from './components/Sort/SortPanel';
 
 function App() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -23,6 +27,7 @@ function App() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [sortOption, setSortOption] = useState<SortOption>('createdAt-desc');
 
   const { toasts, removeToast, success } = useToast();
 
@@ -40,6 +45,9 @@ function App() {
     selectedCategories,
     selectedStatus,
   });
+
+  // 使用排序 Hook
+  const sortedProjects = useSort(filteredProjects, sortOption);
 
   // 重置筛选
   const handleResetFilter = () => {
@@ -100,11 +108,14 @@ function App() {
         <Header projects={projects} onImport={handleImport} />
         <main className="flex-1">
           <Container>
+            {/* 项目统计面板 */}
+            {!isLoading && totalCount > 0 && <StatsPanel projects={projects} />}
+
             {/* 统计信息 */}
             <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">我的项目</h2>
-                <p className="text-gray-600 text-sm">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">我的项目</h2>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   共 {totalCount} 个项目 · {activeCount} 个活跃
                   {filteredCount !== totalCount && ` · 筛选后 ${filteredCount} 个`}
                 </p>
@@ -134,9 +145,12 @@ function App() {
               onReset={handleResetFilter}
             />
 
+            {/* 排序面板 */}
+            <SortPanel value={sortOption} onChange={setSortOption} />
+
             {/* 项目网格 */}
             <ProjectGrid
-              projects={filteredProjects}
+              projects={sortedProjects}
               isLoading={isLoading}
               onDelete={handleDelete}
               onEdit={handleEdit}

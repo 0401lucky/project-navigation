@@ -14,12 +14,19 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease;
+  }
+
+  /* 深色模式背景 */
+  .dark body {
+    background: #0f172a;
   }
 
   * {
     box-sizing: border-box;
   }
 
+  /* 浅色模式滚动条 */
   *::-webkit-scrollbar {
     width: 8px;
   }
@@ -36,6 +43,19 @@
   *::-webkit-scrollbar-thumb:hover {
     background: #b0b0b0;
   }
+
+  /* 深色模式滚动条 */
+  .dark *::-webkit-scrollbar-track {
+    background: #1e293b;
+  }
+
+  .dark *::-webkit-scrollbar-thumb {
+    background: #475569;
+  }
+
+  .dark *::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+  }
 }
 
 @layer utilities {
@@ -49,5 +69,16 @@
   .card:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     transform: translateY(-2px);
+  }
+
+  /* 深色模式卡片样式 */
+  .dark .card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   }
 }

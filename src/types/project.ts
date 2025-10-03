@@ -7,6 +7,7 @@ export interface Project {
   tags: string[]; // 标签数组
   category: ProjectCategory; // 项目分类
   thumbnail?: string; // 缩略图 URL(可选)
+  icon?: string; // 项目图标(Emoji或图片URL)(可选)
   status: ProjectStatus; // 项目状态
   createdAt: string; // 创建时间(ISO 8601)
   updatedAt: string; // 更新时间(ISO 8601)
@@ -35,6 +36,7 @@ export interface ProjectFormData {
   tags: string[];
   category: ProjectCategory;
   thumbnail?: string;
+  icon?: string;
   status: ProjectStatus;
   isFeatured?: boolean;
 }
