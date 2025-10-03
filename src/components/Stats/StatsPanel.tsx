@@ -79,7 +79,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ projects }) => {
             <StatItem label="总项目数" value={totalCount} icon="📦" color="blue" />
             <StatItem label="活跃项目" value={activeCount} icon="✅" color="green" />
             <StatItem label="精选项目" value={featuredCount} icon="⭐" color="yellow" />
-            <StatItem label="完成率" value={`${totalCount > 0 ? Math.round((projects.filter(p => p.status === 'completed').length / totalCount) * 100) : 0}%`} icon="📈" color="purple" />
+            <StatItem label="归档率" value={`${totalCount > 0 ? Math.round((projects.filter(p => p.status === 'archived').length / totalCount) * 100) : 0}%`} icon="📈" color="purple" />
           </div>
         </div>
 
@@ -232,9 +232,8 @@ function getCategoryColor(category: string): string {
 function getStatusColor(status: string): string {
   const colors: Record<string, string> = {
     'active': '#10b981',
-    'developing': '#3b82f6',
-    'completed': '#8b5cf6',
-    'paused': '#f59e0b',
+    'in-progress': '#3b82f6',
+    'planned': '#8b5cf6',
     'archived': '#6b7280',
   };
   return colors[status] || '#6b7280';
@@ -243,9 +242,8 @@ function getStatusColor(status: string): string {
 function getStatusBadgeColor(status: string): string {
   const colors: Record<string, string> = {
     'active': 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300',
-    'developing': 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300',
-    'completed': 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300',
-    'paused': 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300',
+    'in-progress': 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300',
+    'planned': 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300',
     'archived': 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-400',
   };
   return colors[status] || 'bg-gray-100 text-gray-700';
