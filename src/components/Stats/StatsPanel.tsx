@@ -154,33 +154,32 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ projects }) => {
             </div>
           )}
         </div>
-      </div>
 
-            {/* 最近更新 */}
-            {recentProjects.length > 0 && (
-              <div className="mt-6 card p-6 rounded-xl lg:col-span-3">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">🕒 最近更新</h3>
-                <div className="space-y-3">
-                  {recentProjects.map((project) => (
-                    <div key={project.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 dark:text-white">{project.name}</h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{CATEGORY_LABELS[project.category]}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {new Date(project.updatedAt).toLocaleDateString('zh-CN')}
-                        </p>
-                        <span className={`text-xs px-2 py-1 rounded ${getStatusBadgeColor(project.status)}`}>
-                          {STATUS_LABELS[project.status]}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+        {/* 最近更新 */}
+        {recentProjects.length > 0 && (
+          <div className="mt-6 card p-6 rounded-xl lg:col-span-3">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">🕒 最近更新</h3>
+            <div className="space-y-3">
+              {recentProjects.map((project) => (
+                <div key={project.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-900 dark:text-white">{project.name}</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{CATEGORY_LABELS[project.category]}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {new Date(project.updatedAt).toLocaleDateString('zh-CN')}
+                    </p>
+                    <span className={`text-xs px-2 py-1 rounded ${getStatusBadgeColor(project.status)}`}>
+                      {STATUS_LABELS[project.status]}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            )}
+              ))}
             </div>
+          </div>
+        )}
+      </div>
           </motion.div>
         )}
       </AnimatePresence>
