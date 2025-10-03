@@ -24,7 +24,7 @@ function App() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
 
-  const { toasts, removeToast, success, error } = useToast();
+  const { toasts, removeToast, success } = useToast();
 
   // 初始化加载数据
   useEffect(() => {

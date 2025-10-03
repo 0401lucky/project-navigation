@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import type { Project, ProjectCategory, ProjectStatus } from '../../types/project';
 import { CATEGORY_LABELS, STATUS_LABELS } from '../../constants';
