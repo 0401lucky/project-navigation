@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, Suspense, lazy } from 'react';
+import { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { Background } from './components/Layout/Background';
 import { Header } from './components/Layout/Header';
 import { Container } from './components/Layout/Container';
@@ -22,7 +22,7 @@ import { useToast } from './hooks/useToast';
 import { storage } from './utils/storage';
 import type { Project, ProjectCategory, ProjectStatus } from './types/project';
 import type { SortOption } from './components/Sort/SortPanel';
-import { ViewSwitcher, type ViewMode } from './components/ViewSwitcher/ViewSwitcher';
+import type { ViewMode } from './components/ViewSwitcher/ViewSwitcher';
 import { QuickToolbar } from './components/Controls/QuickToolbar';
 import { BulkBar } from './components/BulkActions/BulkBar';
 import { CommandPalette, type CommandItem } from './components/CommandPalette/CommandPalette';

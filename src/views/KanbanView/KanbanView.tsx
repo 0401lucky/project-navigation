@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, type DragEvent } from 'react';
 import { motion } from 'framer-motion';
 import type { Project, ProjectStatus } from '../../types/project';
 import { STATUS_LABELS } from '../../constants';
@@ -32,7 +32,7 @@ export const KanbanView: React.FC<KanbanViewProps> = ({
     return map;
   }, [projects]);
 
-  const onDropTo = (status: ProjectStatus, e: React.DragEvent) => {
+  const onDropTo = (status: ProjectStatus, e: DragEvent) => {
     e.preventDefault();
     const id = e.dataTransfer.getData('text/plain');
     if (id) onStatusChange?.(id, status);
@@ -58,13 +58,15 @@ export const KanbanView: React.FC<KanbanViewProps> = ({
               <div className="text-center text-xs text-gray-400 py-4">拖拽项目到这里</div>
             ) : (
               grouped[status].map((p) => (
-                <motion.div
-                  key={p.id}
-                  layout
-                  draggable
-                  onDragStart={(e) => e.dataTransfer.setData('text/plain', p.id)}
-                >
-                  <ProjectCard project={p} onEdit={onEdit} onDelete={onDelete} onOpen={onOpen} />
+                <motion.div key={p.id} layout>
+                  <div
+                    draggable
+                    onDragStart={(e: DragEvent<HTMLDivElement>) => {
+                      e.dataTransfer.setData('text/plain', p.id);
+                    }}
+                  >
+                    <ProjectCard project={p} onEdit={onEdit} onDelete={onDelete} onOpen={onOpen} />
+                  </div>
                 </motion.div>
               ))
             )}
@@ -74,4 +76,3 @@ export const KanbanView: React.FC<KanbanViewProps> = ({
     </div>
   );
 };
-
