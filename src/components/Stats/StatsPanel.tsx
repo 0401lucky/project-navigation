@@ -6,10 +6,12 @@ import { CATEGORY_LABELS, STATUS_LABELS } from '../../constants';
 
 interface StatsPanelProps {
   projects: Project[];
+  compact?: boolean; // 抽屉内使用，强制单列并放大图表
+  defaultExpanded?: boolean; // 默认展开
 }
 
-export const StatsPanel: React.FC<StatsPanelProps> = ({ projects }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+export const StatsPanel: React.FC<StatsPanelProps> = ({ projects, compact = false, defaultExpanded = false }) => {
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
   // 统计数据
   const totalCount = projects.length;
   const activeCount = projects.filter(p => p.status === 'active').length;
@@ -71,7 +73,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ projects }) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className={`mt-4 grid ${compact ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'} gap-6`}>
         {/* 概览卡片 */}
         <div className="card p-6 rounded-xl">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">项目概览</h3>
@@ -87,14 +89,14 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ projects }) => {
         <div className="card p-6 rounded-xl">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">分类分布</h3>
           {categoryStats.length > 0 ? (
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height={compact ? 240 : 200}>
               <PieChart>
                 <Pie
                   data={categoryStats}
                   cx="50%"
                   cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
+                  innerRadius={compact ? 60 : 50}
+                  outerRadius={compact ? 100 : 80}
                   paddingAngle={5}
                   dataKey="value"
                 >
@@ -133,7 +135,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ projects }) => {
         <div className="card p-6 rounded-xl">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">状态统计</h3>
           {statusStats.length > 0 ? (
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height={compact ? 240 : 200}>
               <BarChart data={statusStats}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
                 <XAxis dataKey="name" tick={{ fontSize: 12 }} stroke="#888" />

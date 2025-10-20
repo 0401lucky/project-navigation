@@ -2,13 +2,15 @@ import { motion } from 'framer-motion';
 import type { Project } from '../../types/project';
 import { DataManagement } from '../DataManagement/DataManagement';
 import { ThemeToggle } from '../Theme/ThemeToggle';
+import { DensityToggle } from '../Theme/DensityToggle';
 
 interface HeaderProps {
   projects?: Project[];
   onImport?: (projects: Project[]) => void;
+  onOpenStats?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ projects = [], onImport }) => {
+export const Header: React.FC<HeaderProps> = ({ projects = [], onImport, onOpenStats }) => {
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
@@ -26,6 +28,16 @@ export const Header: React.FC<HeaderProps> = ({ projects = [], onImport }) => {
 
           <nav className="flex items-center space-x-1 sm:space-x-2">
             <ThemeToggle />
+            <DensityToggle />
+            {onOpenStats && (
+              <button
+                onClick={onOpenStats}
+                className="px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                title="项目统计"
+              >
+                📊
+              </button>
+            )}
             {onImport && <DataManagement projects={projects} onImport={onImport} />}
             <button className="hidden sm:block px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
               关于

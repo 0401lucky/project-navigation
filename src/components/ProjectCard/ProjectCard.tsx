@@ -7,12 +7,20 @@ interface ProjectCardProps {
   project: Project;
   onEdit?: (project: Project) => void;
   onDelete?: (id: string) => void;
+  onOpen?: (project: Project) => void;
+  selectable?: boolean;
+  selected?: boolean;
+  onSelectChange?: (id: string) => void;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onEdit,
-  onDelete
+  onDelete,
+  onOpen,
+  selectable = true,
+  selected = false,
+  onSelectChange
 }) => {
   return (
     <motion.div
@@ -20,8 +28,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, scale: 1.01 }}
       transition={{ duration: 0.2 }}
-      className="group relative h-full"
+      className="group relative h-full cursor-pointer"
+      onClick={() => onOpen?.(project)}
     >
+      {/* 多选复选框 */}
+      {selectable && (
+        <div className="absolute top-2 left-2 z-10" onClick={(e) => e.stopPropagation()}>
+          <input type="checkbox" checked={selected} onChange={() => onSelectChange?.(project.id)} />
+        </div>
+      )}
+
       {/* 白色卡片 */}
       <div className="card rounded-xl p-6 h-full flex flex-col transition-all duration-200">
         {/* 精选标记 */}

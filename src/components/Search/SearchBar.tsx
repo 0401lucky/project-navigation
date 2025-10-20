@@ -5,12 +5,14 @@ interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  inputRef?: React.Ref<HTMLInputElement>;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   value,
   onChange,
   placeholder = '搜索项目名称、描述或标签...',
+  inputRef,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -46,6 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder={placeholder}
+            ref={inputRef}
             className="flex-1 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none text-sm"
           />
           {value && (

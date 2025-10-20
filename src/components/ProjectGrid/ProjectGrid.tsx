@@ -10,6 +10,9 @@ interface ProjectGridProps {
   onEdit?: (project: Project) => void;
   onDelete?: (id: string) => void;
   onAddClick?: () => void;
+  onOpen?: (project: Project) => void;
+  selectedIds?: Set<string>;
+  onToggleSelect?: (id: string) => void;
 }
 
 const container = {
@@ -33,6 +36,9 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
   onEdit,
   onDelete,
   onAddClick,
+  onOpen,
+  selectedIds,
+  onToggleSelect,
 }) => {
   if (isLoading) {
     return <LoadingSkeleton count={6} />;
@@ -47,7 +53,7 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
       variants={container}
       initial="hidden"
       animate="show"
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6"
     >
       {projects.map((project) => (
         <motion.div key={project.id} variants={item}>
@@ -55,6 +61,9 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
             project={project}
             onEdit={onEdit}
             onDelete={onDelete}
+            onOpen={onOpen}
+            selected={selectedIds?.has(project.id)}
+            onSelectChange={onToggleSelect}
           />
         </motion.div>
       ))}

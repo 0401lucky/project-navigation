@@ -5,6 +5,17 @@
     scroll-behavior: smooth;
   }
 
+  /* 界面密度（整体缩放基于 rem） */
+  html[data-density='comfortable'] {
+    font-size: 16px;
+  }
+  html[data-density='compact'] {
+    font-size: 14px; /* ~87.5% */
+  }
+  html[data-density='condensed'] {
+    font-size: 12px; /* ~75%，接近你浏览器 67% 的效果 */
+  }
+
   body {
     margin: 0;
     padding: 0;
